@@ -1,0 +1,78 @@
+@startuml
+'start
+:点击按钮;
+if(常量型？) then(是)
+->常量型;
+partition 常量型{
+':取按钮对应的字符;
+if(刚刚是否完成一次运算？) then(是)
+:matchNow赋于新的值、result清零、重置text文本框、\n字符添加到temp、equal_flag赋值为零;
+
+else (否)
+->没有完成一次运算;
+:将对应字符添加到mathNow和text文本框;
+endif;
+}
+else (否)
+if(运算符？) then(是)
+->加减乘除符号;
+partition 运算符{
+':取按钮对应的字符;
+if(刚刚是否完成一次运算？) then(是)
+->刚刚完成了一次运算;
+if(是否为减号) then (是)
+:将matchNow赋值为"-",并result清零，\n重置text文本框、equal_flag赋值为零;
+else(否)
+->不是减号;
+:不进行任何操作;
+endif;
+else(刚刚未完成一次运算，\n即此次运算为新的运算)
+if(对matchNow的最后一个字符进行判断，是否为数字、！、）、e、Π、%) then(是)
+:将对应的运算添加到matchNow,和text文本框中;
+else(否)
+:不进行任何操作;
+
+endif;
+endif;
+}
+else (否)
+
+->函数型或功能型按键;
+if(是否为函数建？) then(是 )
+->函数型按键;
+partition 函数型{
+':取按钮对应的字符;
+if(刚刚是否完成一次运算)then(是)
+'刚刚完成了一次运算
+if(点击的按钮是否为sin、cos、tan、ln、log、Π、|X|、(、)？) then(是)
+:将matchNow赋于点击按钮对应的函数,并添加到text文本框;
+else (否)
+:不进行任何操作;
+endif;
+
+
+'detach;
+'刚刚没完成一次运算
+else(否)
+:将matchNow赋于点击按钮对应的函数,并添加到text文本框;
+'detach;
+endif;
+}
+else (否)
+
+->功能型按键;
+partition 功能型{
+':取按钮对应的字符;
+:调用对应的函数;
+}
+'endi
+endif;
+'结束第二个if，及判断为运算型
+endif;
+detach;
+'结束第一个if，总的if，及判断为常量型
+endif;
+
+detach;
+
+@enduml
